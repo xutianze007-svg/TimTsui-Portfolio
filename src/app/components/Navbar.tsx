@@ -75,6 +75,20 @@ export function Navbar({ onNavigate, currentPage }: NavbarProps) {
         >
             CV
         </button>
+        <a 
+            href="#"
+            onClick={(e) => {
+                e.preventDefault();
+                alert("这里稍后可以替换为你的预约链接，比如 Calendly 或 Buy Me a Coffee");
+            }}
+            className="relative ml-2 px-6 py-2.5 bg-white/5 backdrop-blur-xl border border-white/20 text-white text-sm font-medium rounded-full transition-all duration-500 hover:bg-white/10 hover:border-white/40 hover:scale-105 active:scale-95 shadow-[0_8px_32px_0_rgba(255,255,255,0.05)] hover:shadow-[0_8px_32px_0_rgba(255,255,255,0.15)] overflow-hidden group"
+        >
+            <span className="relative z-10 flex items-center gap-2 tracking-wide">Let's Talk</span>
+            {/* Liquid Gloss Reflection */}
+            <div className="absolute inset-0 -translate-x-[150%] bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:translate-x-[150%] transition-transform duration-1000 ease-out pointer-events-none" />
+            {/* Inner subtle glow for liquid volume */}
+            <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.2),transparent_60%)] pointer-events-none" />
+        </a>
       </div>
     </nav>
   );
