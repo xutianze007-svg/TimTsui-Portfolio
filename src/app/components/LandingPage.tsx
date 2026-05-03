@@ -100,74 +100,35 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
     };
   }, []);
 
-  // --- Canvas-based Sequence Rendering ---
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
+  // --- Hover-to-Play Sequence ---
+  const [frameIndex, setFrameIndex] = useState(1);
   const isHovering = useRef(false);
   const frameRef = useRef(1);
-  const totalFrames = 66; // Rollback to 66 for performance stability
+  const totalFrames = 66;
 
   useEffect(() => {
-    let animationId: number;
-    let lastTime = performance.now();
-    const fps = 60;
-    const interval = 1000 / fps;
-
-    const renderFrame = (index: number) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d', { alpha: false });
-      if (!ctx) return;
-
-      const img = imagesRef.current[index];
-      if (!img || !img.complete) return;
-
-      const canvasWidth = canvas.width;
-      const canvasHeight = canvas.height;
-      const imgWidth = img.width;
-      const imgHeight = img.height;
-      
-      const imgRatio = imgWidth / imgHeight;
-      const canvasRatio = canvasWidth / canvasHeight;
-      
-      let drawWidth, drawHeight, offsetX, offsetY;
-      
-      if (imgRatio > canvasRatio) {
-        drawHeight = canvasHeight;
-        drawWidth = canvasHeight * imgRatio;
-        offsetX = (canvasWidth - drawWidth) * 0.58; 
-        offsetY = 0;
-      } else {
-        drawWidth = canvasWidth;
-        drawHeight = canvasWidth / imgRatio;
-        offsetX = 0;
-        offsetY = (canvasHeight - drawHeight) * 0.5;
-      }
-      
-      ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-    };
-
-    // Preload images and trigger initial render
+    // Preload images silently in background
     for (let i = 1; i <= totalFrames; i++) {
       const img = new Image();
       img.src = `/tim-sequence/${i.toString().padStart(5, '0')}.png`;
-      img.onload = () => {
-        if (i === 1) renderFrame(1);
-      };
-      imagesRef.current[i] = img;
     }
+
+    let animationId: number;
+    let lastTime = performance.now();
+    const fps = 45; // Smooth 45fps
+    const interval = 1000 / fps;
 
     const playSequence = (time: number) => {
       if (time - lastTime >= interval) {
         if (isHovering.current) {
           if (frameRef.current < totalFrames) {
             frameRef.current += 1;
-            renderFrame(frameRef.current);
+            setFrameIndex(frameRef.current);
           }
         } else {
           if (frameRef.current > 1) {
             frameRef.current -= 1;
-            renderFrame(frameRef.current);
+            setFrameIndex(frameRef.current);
           }
         }
         lastTime = time;
@@ -177,22 +138,8 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
 
     animationId = requestAnimationFrame(playSequence);
 
-    const handleResize = () => {
-      if (canvasRef.current) {
-        canvasRef.current.width = window.innerWidth * window.devicePixelRatio;
-        canvasRef.current.height = window.innerHeight * window.devicePixelRatio;
-        const ctx = canvasRef.current.getContext('2d');
-        if (ctx) ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-        renderFrame(frameRef.current);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    handleResize();
-
     return () => {
       cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -210,11 +157,13 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
       onMouseLeave={() => { isHovering.current = false; }}
     >
       
-      {/* Sequence Canvas Background */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 h-full w-full pointer-events-none"
-        style={{ width: '100%', height: '100%' }}
+      {/* Sequence Image Background */}
+      <img
+        src={`/tim-sequence/${frameIndex.toString().padStart(5, '0')}.png`}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-[58%_50%]"
+        loading="eager"
       />
 
       {/* Dark overlays to ensure text is readable */}
