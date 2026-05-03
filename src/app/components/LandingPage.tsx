@@ -105,19 +105,12 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const isHovering = useRef(false);
   const frameRef = useRef(1);
-  const totalFrames = 150;
+  const totalFrames = 66; // Rollback to 66 for performance stability
 
   useEffect(() => {
-    // Fill the imagesRef array - browser cache will be used from Preloader
-    for (let i = 1; i <= totalFrames; i++) {
-      const img = new Image();
-      img.src = `/tim-sequence/${i.toString().padStart(5, '0')}.png`;
-      imagesRef.current[i] = img;
-    }
-
     let animationId: number;
     let lastTime = performance.now();
-    const fps = 60; // Upgraded to 60fps
+    const fps = 60;
     const interval = 1000 / fps;
 
     const renderFrame = (index: number) => {
@@ -129,7 +122,6 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
       const img = imagesRef.current[index];
       if (!img || !img.complete) return;
 
-      // Draw image covering the canvas (object-fit: cover logic)
       const canvasWidth = canvas.width;
       const canvasHeight = canvas.height;
       const imgWidth = img.width;
@@ -143,7 +135,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
       if (imgRatio > canvasRatio) {
         drawHeight = canvasHeight;
         drawWidth = canvasHeight * imgRatio;
-        offsetX = (canvasWidth - drawWidth) * 0.58; // 58% object-position
+        offsetX = (canvasWidth - drawWidth) * 0.58; 
         offsetY = 0;
       } else {
         drawWidth = canvasWidth;
@@ -154,6 +146,16 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
       
       ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
     };
+
+    // Preload images and trigger initial render
+    for (let i = 1; i <= totalFrames; i++) {
+      const img = new Image();
+      img.src = `/tim-sequence/${i.toString().padStart(5, '0')}.png`;
+      img.onload = () => {
+        if (i === 1) renderFrame(1);
+      };
+      imagesRef.current[i] = img;
+    }
 
     const playSequence = (time: number) => {
       if (time - lastTime >= interval) {

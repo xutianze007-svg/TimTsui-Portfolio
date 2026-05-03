@@ -24,7 +24,7 @@ const cardImages = [
   alandPng
 ];
 
-const totalSequenceFrames = 150;
+const totalSequenceFrames = 66;
 
 interface PreloaderProps {
   onComplete: () => void;
