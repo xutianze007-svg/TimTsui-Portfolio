@@ -109,8 +109,9 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
   const totalFrames = 66;
 
   useEffect(() => {
-    // Detect if device is mobile/touch
-    const isMobile = window.matchMedia("(max-width: 1024px)").matches || 'ontouchstart' in window;
+    // Detect if device supports hover (true for Desktop with mouse, false for Touch/Mobile)
+    const canHover = window.matchMedia("(hover: hover)").matches;
+    const isMobile = !canHover;
 
     // Preload images as Blob URLs
     for (let i = 1; i <= totalFrames; i++) {
@@ -132,7 +133,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
     const playSequence = (time: number) => {
       if (time - lastTime >= interval) {
         if (isMobile) {
-          // Ping-pong autoplay on mobile
+          // Ping-pong autoplay ONLY on mobile/touch
           if (autoPlayDirection.current === 1) {
             if (frameRef.current < totalFrames) {
               frameRef.current += 1;
