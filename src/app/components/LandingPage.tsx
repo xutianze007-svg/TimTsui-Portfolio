@@ -105,10 +105,14 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
   const [frameUrls, setFrameUrls] = useState<Record<number, string>>({});
   const isHovering = useRef(false);
   const frameRef = useRef(1);
+  const autoPlayDirection = useRef(1); // 1 for forward, -1 for backward
   const totalFrames = 66;
 
   useEffect(() => {
-    // Preload images as Blob URLs to completely bypass network validation on src change
+    // Detect if device is mobile/touch
+    const isMobile = window.matchMedia("(max-width: 1024px)").matches || 'ontouchstart' in window;
+
+    // Preload images as Blob URLs
     for (let i = 1; i <= totalFrames; i++) {
       const urlPath = `/tim-sequence/${i.toString().padStart(5, '0')}.png`;
       fetch(urlPath)
@@ -117,27 +121,44 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
           const objectUrl = URL.createObjectURL(blob);
           setFrameUrls(prev => ({ ...prev, [i]: objectUrl }));
         })
-        .catch(err => {
-          console.error("Failed to preload frame", i, err);
-        });
+        .catch(err => console.error("Preload fail", i, err));
     }
 
     let animationId: number;
     let lastTime = performance.now();
-    const fps = 45; // Smooth 45fps
+    const fps = isMobile ? 30 : 45; // Slightly lower FPS on mobile to save battery
     const interval = 1000 / fps;
 
     const playSequence = (time: number) => {
       if (time - lastTime >= interval) {
-        if (isHovering.current) {
-          if (frameRef.current < totalFrames) {
-            frameRef.current += 1;
-            setFrameIndex(frameRef.current);
+        if (isMobile) {
+          // Ping-pong autoplay on mobile
+          if (autoPlayDirection.current === 1) {
+            if (frameRef.current < totalFrames) {
+              frameRef.current += 1;
+            } else {
+              autoPlayDirection.current = -1;
+            }
+          } else {
+            if (frameRef.current > 1) {
+              frameRef.current -= 1;
+            } else {
+              autoPlayDirection.current = 1;
+            }
           }
+          setFrameIndex(frameRef.current);
         } else {
-          if (frameRef.current > 1) {
-            frameRef.current -= 1;
-            setFrameIndex(frameRef.current);
+          // Hover-based play on desktop
+          if (isHovering.current) {
+            if (frameRef.current < totalFrames) {
+              frameRef.current += 1;
+              setFrameIndex(frameRef.current);
+            }
+          } else {
+            if (frameRef.current > 1) {
+              frameRef.current -= 1;
+              setFrameIndex(frameRef.current);
+            }
           }
         }
         lastTime = time;
