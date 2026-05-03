@@ -198,13 +198,13 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
           >
             <p 
                 className="mb-1 lg:mb-2 text-[16px] lg:text-[clamp(18px,2.2vw,36px)] uppercase leading-none text-[#ff8a1c] drop-shadow-[0_0_24px_rgba(255,122,18,0.65)]"
-                style={{ fontFamily: '"Eurostile Extended", Eurostile, sans-serif', fontWeight: 500 }}
+                style={{ fontFamily: '"Eurostile Extended", Michroma, Eurostile, sans-serif', fontWeight: 500 }}
               >
                 Tim Tsui //
               </p>
               <h1 
                 className="text-[28px] leading-[0.95] sm:text-[36px] lg:text-[clamp(30px,4.5vw,72px)] lg:leading-[0.9] uppercase text-white drop-shadow-[0_0_22px_rgba(255,255,255,0.22)]"
-                style={{ fontFamily: '"Eurostile Extended", Eurostile, sans-serif', fontWeight: 500 }}
+                style={{ fontFamily: '"Eurostile Extended", Michroma, Eurostile, sans-serif', fontWeight: 500 }}
               >
                 Modern
                 <br />
@@ -288,7 +288,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
                     <Shuffle
                       text="0 TO 1"
                       className="text-2xl leading-none text-white cursor-default"
-                      style={{ fontFamily: '"Eurostile Extended", Eurostile, sans-serif', fontWeight: 400 }}
+                      style={{ fontFamily: '"Eurostile Extended", Michroma, Eurostile, sans-serif', fontWeight: 400 }}
                       shuffleDirection="right"
                       duration={0.35}
                       animationMode="evenodd"
@@ -309,7 +309,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
                     <Shuffle
                       text="100%"
                       className="text-2xl leading-none text-white cursor-default"
-                      style={{ fontFamily: '"Eurostile Extended", Eurostile, sans-serif', fontWeight: 400 }}
+                      style={{ fontFamily: '"Eurostile Extended", Michroma, Eurostile, sans-serif', fontWeight: 400 }}
                       shuffleDirection="right"
                       duration={0.35}
                       animationMode="evenodd"
