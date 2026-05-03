@@ -5,12 +5,23 @@ import presentationImage from 'figma:asset/f03037d257dc01f861fb750a513f0773908ca
 import workshopImage from 'figma:asset/2debc723ebfba17cd5272bf3de41b265740baef7.png';
 import profileImage from 'figma:asset/d1f638618c03a834b546f88ef0d7297de99d5bec.png';
 
+import panPng from "../../assets/pan.png";
+import ecovacsPng from "../../assets/Ecovacs.png";
+import monashPng from "../../assets/M-career portal.png";
+import booheePng from "../../assets/Boohee.png";
+import alandPng from "../../assets/aland.png";
+
 // Critical Assets to Preload
 const cardImages = [
   graduationImage,
   presentationImage,
   workshopImage,
-  profileImage
+  profileImage,
+  panPng,
+  ecovacsPng,
+  monashPng,
+  booheePng,
+  alandPng
 ];
 
 const totalSequenceFrames = 150;
