@@ -102,15 +102,24 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
 
   // --- Hover-to-Play Sequence ---
   const [frameIndex, setFrameIndex] = useState(1);
+  const [frameUrls, setFrameUrls] = useState<Record<number, string>>({});
   const isHovering = useRef(false);
   const frameRef = useRef(1);
   const totalFrames = 66;
 
   useEffect(() => {
-    // Preload images silently in background
+    // Preload images as Blob URLs to completely bypass network validation on src change
     for (let i = 1; i <= totalFrames; i++) {
-      const img = new Image();
-      img.src = `/tim-sequence/${i.toString().padStart(5, '0')}.png`;
+      const urlPath = `/tim-sequence/${i.toString().padStart(5, '0')}.png`;
+      fetch(urlPath)
+        .then(res => res.blob())
+        .then(blob => {
+          const objectUrl = URL.createObjectURL(blob);
+          setFrameUrls(prev => ({ ...prev, [i]: objectUrl }));
+        })
+        .catch(err => {
+          console.error("Failed to preload frame", i, err);
+        });
     }
 
     let animationId: number;
@@ -159,7 +168,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
       
       {/* Sequence Image Background */}
       <img
-        src={`/tim-sequence/${frameIndex.toString().padStart(5, '0')}.png`}
+        src={frameUrls[frameIndex] || `/tim-sequence/${frameIndex.toString().padStart(5, '0')}.png`}
         alt=""
         aria-hidden="true"
         className="absolute inset-0 h-full w-full object-cover object-[58%_50%]"
