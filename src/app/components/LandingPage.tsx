@@ -188,8 +188,8 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
         <div className="hero-particle left-[74%] top-[63%]" />
       </div>
 
-      <div className="relative z-10 flex h-full max-h-[100dvh] flex-col px-5 pb-4 pt-[86px] sm:px-8 lg:px-12 lg:pt-[92px]">
-        <div className="grid min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-[minmax(420px,0.85fr)_minmax(320px,0.55fr)]">
+      <div className="relative z-10 flex h-full max-h-[100dvh] flex-col px-5 pb-4 pt-[64px] sm:px-8 lg:px-12 lg:pt-[92px]">
+        <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 lg:gap-6 lg:grid-cols-[minmax(420px,0.85fr)_minmax(320px,0.55fr)]">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -197,13 +197,13 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
             className="flex max-w-[760px] flex-col justify-center lg:pb-[118px]"
           >
             <p 
-                className="mb-2 text-[clamp(18px,2.2vw,36px)] uppercase leading-none text-[#ff8a1c] drop-shadow-[0_0_24px_rgba(255,122,18,0.65)]"
+                className="mb-1 lg:mb-2 text-[16px] lg:text-[clamp(18px,2.2vw,36px)] uppercase leading-none text-[#ff8a1c] drop-shadow-[0_0_24px_rgba(255,122,18,0.65)]"
                 style={{ fontFamily: '"Eurostile Extended", Eurostile, sans-serif', fontWeight: 500 }}
               >
                 Tim Tsui //
               </p>
               <h1 
-                className="text-[clamp(30px,4.5vw,72px)] uppercase leading-[0.9] text-white drop-shadow-[0_0_22px_rgba(255,255,255,0.22)]"
+                className="text-[28px] leading-[0.95] sm:text-[36px] lg:text-[clamp(30px,4.5vw,72px)] lg:leading-[0.9] uppercase text-white drop-shadow-[0_0_22px_rgba(255,255,255,0.22)]"
                 style={{ fontFamily: '"Eurostile Extended", Eurostile, sans-serif', fontWeight: 500 }}
               >
                 Modern
@@ -213,7 +213,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
                 Architect
               </h1>
 
-              <div className="relative mt-5 h-[3px] w-full max-w-[410px] overflow-hidden rounded-full bg-[#ff8a1c]/20">
+              <div className="relative mt-3 lg:mt-5 h-[3px] w-full max-w-[410px] overflow-hidden rounded-full bg-[#ff8a1c]/20">
                 <div 
                   className="absolute inset-y-0 w-1/2 rounded-full bg-gradient-to-r from-transparent via-[#ff8a1c] to-transparent shadow-[0_0_18px_rgba(255,122,18,0.75)]"
                   style={{
@@ -228,15 +228,15 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
                   100% { left: -50%; opacity: 0.4; }
                 }
               `}</style>
-              <p className="mt-4 max-w-[410px] text-[clamp(15px,1.35vw,20px)] font-light leading-relaxed text-white/78">
+              <p className="mt-2 lg:mt-4 max-w-[410px] text-[13px] lg:text-[clamp(15px,1.35vw,20px)] font-light leading-relaxed text-white/78">
                 Crafting immersive product experiences through UI/UX, motion, and spatial interaction.
               </p>
 
-              <div className="mt-5 flex flex-wrap gap-3">
+              <div className="mt-3 lg:mt-5 flex flex-wrap gap-2 lg:gap-3">
                 {["GenAI Stack", "UI/UX", "System Design"].map((tag) => (
                   <motion.span
                     key={tag}
-                    className="rounded-full border border-white/12 bg-black/35 px-4 py-1.5 text-sm font-semibold text-white/88 shadow-[inset_0_0_18px_rgba(255,122,18,0.08)] backdrop-blur-xl"
+                    className="rounded-full border border-white/12 bg-black/35 px-3 py-1 text-[11px] lg:px-4 lg:py-1.5 lg:text-sm font-semibold text-white/88 shadow-[inset_0_0_18px_rgba(255,122,18,0.08)] backdrop-blur-xl"
                     whileHover={{
                       y: -2,
                       borderColor: "rgba(255,138,28,0.7)",
@@ -244,7 +244,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
                     }}
                     transition={{ type: "spring", stiffness: 420, damping: 26 }}
                   >
-                    <span className="mr-3 inline-block h-2 w-2 rounded-full bg-[#ff8a1c] shadow-[0_0_12px_rgba(255,122,18,1)]" />
+                    <span className="mr-2 lg:mr-3 inline-block h-1.5 w-1.5 lg:h-2 lg:w-2 rounded-full bg-[#ff8a1c] shadow-[0_0_12px_rgba(255,122,18,1)]" />
                     {tag}
                   </motion.span>
                 ))}
@@ -252,7 +252,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
 
               <motion.div
                 ref={cardRef}
-                className="hero-glow-card relative mt-6 max-w-[410px] rounded-[6px] p-[1px] backdrop-blur-md"
+                className="hero-glow-card relative mt-3 lg:mt-6 max-w-[410px] rounded-[6px] p-[1px] backdrop-blur-md"
                 whileHover={{ y: -3 }}
               >
                 {/* Animated flowing border */}
@@ -266,7 +266,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
                 {/* Static subtle border underneath */}
                 <div className="absolute inset-0 rounded-[6px] border border-[#ff8a1c]/20" />
                 {/* Inner card content */}
-                <div className="relative rounded-[6px] bg-black/85 p-4 shadow-[0_0_38px_rgba(255,122,18,0.12)]">
+                <div className="relative rounded-[6px] bg-black/85 p-3 lg:p-4 shadow-[0_0_38px_rgba(255,122,18,0.12)]">
               <style>{`
                 @property --glow-angle {
                   syntax: '<angle>';
@@ -446,7 +446,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
           </div>
 
           {/* ── Project Cards (Scrollable) ── */}
-          <div className="relative z-10 mt-4 shrink-0">
+          <div className="relative z-10 mt-2 lg:mt-4 shrink-0">
             <div 
               className="flex gap-3 overflow-x-auto pb-3 scrollbar-hide"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -463,7 +463,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
                   }}
                   className={cn(
                     "group relative flex-shrink-0 overflow-hidden rounded-[6px] border border-white/12 bg-black/42 text-left shadow-[0_18px_48px_rgba(0,0,0,0.34)] backdrop-blur-md transition duration-300 hover:border-[#ff8a1c]/70 hover:shadow-[0_0_34px_rgba(255,122,18,0.18)]",
-                    project.isImageOnly ? "min-h-[118px] min-w-[240px] sm:min-w-[320px] lg:min-w-[320px]" : "min-h-[118px] min-w-[240px] sm:min-w-[260px] lg:flex-1"
+                    project.isImageOnly ? "min-h-[100px] lg:min-h-[118px] min-w-[200px] sm:min-w-[320px] lg:min-w-[320px]" : "min-h-[100px] lg:min-h-[118px] min-w-[200px] sm:min-w-[260px] lg:flex-1"
                   )}
                   whileHover={{ y: -5 }}
                   transition={{ type: "spring", stiffness: 320, damping: 24 }}
