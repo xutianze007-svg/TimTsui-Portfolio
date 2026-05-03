@@ -5,12 +5,15 @@ import presentationImage from 'figma:asset/f03037d257dc01f861fb750a513f0773908ca
 import workshopImage from 'figma:asset/2debc723ebfba17cd5272bf3de41b265740baef7.png';
 import profileImage from 'figma:asset/d1f638618c03a834b546f88ef0d7297de99d5bec.png';
 
-const images = [
+// Critical Assets to Preload
+const cardImages = [
   graduationImage,
   presentationImage,
   workshopImage,
   profileImage
 ];
+
+const totalSequenceFrames = 150;
 
 interface PreloaderProps {
   onComplete: () => void;
@@ -19,32 +22,61 @@ interface PreloaderProps {
 export function Preloader({ onComplete }: PreloaderProps) {
   const [count, setCount] = useState(0);
   const [exit, setExit] = useState(false);
+  const [status, setStatus] = useState("Initializing...");
 
   useEffect(() => {
-    // Animation duration for the counter
-    const duration = 2500; 
+    let loadedCount = 0;
+    const totalAssets = cardImages.length + totalSequenceFrames;
     const startTime = Date.now();
-    
-    const animate = () => {
-      const now = Date.now();
-      const progress = Math.min((now - startTime) / duration, 1);
-      
-      // Easing function for smoother counter
-      const easeOutQuart = (x: number): number => 1 - Math.pow(1 - x, 4);
-      
-      setCount(Math.floor(easeOutQuart(progress) * 100));
+    const minimumDisplayTime = 2500; // Keep preloader for at least 2.5s for aesthetics
 
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
+    const updateProgress = () => {
+      loadedCount++;
+      const actualProgress = Math.floor((loadedCount / totalAssets) * 100);
+      
+      // We want the counter to be smooth, so we don't just jump to actualProgress
+      // but we also can't go faster than real loading.
+      setCount(actualProgress);
+      
+      if (loadedCount < 10) setStatus("Connecting to Neural Link...");
+      else if (loadedCount < 40) setStatus("Downloading Visual Sequences...");
+      else if (loadedCount < 80) setStatus("Calibrating Motion Frames...");
+      else if (loadedCount < totalAssets) setStatus("Finalizing System Buffer...");
+      else setStatus("System Ready.");
+
+      if (loadedCount === totalAssets) {
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = Math.max(0, minimumDisplayTime - elapsedTime);
+        
         setTimeout(() => {
-            setExit(true);
-            setTimeout(onComplete, 800); // Wait for exit animation
-        }, 500);
+          setExit(true);
+          setTimeout(onComplete, 800);
+        }, remainingTime);
       }
     };
 
-    requestAnimationFrame(animate);
+    // 1. Preload Card Images
+    cardImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      img.onload = updateProgress;
+      img.onerror = updateProgress; // Continue anyway on error
+    });
+
+    // 2. Preload Sequence Frames (Batching to avoid blocking)
+    const preloadSequence = async () => {
+      for (let i = 1; i <= totalSequenceFrames; i++) {
+        // We use a slight delay for every batch of 10 to keep the UI responsive
+        if (i % 20 === 0) await new Promise(r => setTimeout(r, 10));
+        
+        const img = new Image();
+        img.src = `/tim-sequence/${i.toString().padStart(5, '0')}.png`;
+        img.onload = updateProgress;
+        img.onerror = updateProgress;
+      }
+    };
+
+    preloadSequence();
   }, [onComplete]);
 
   return (
@@ -63,7 +95,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
         
         {/* Decorative elements behind */}
         <motion.div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] border border-[#F2C94C]/20 rounded-full"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] border border-[#ff8a1c]/20 rounded-full"
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         />
@@ -75,7 +107,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
 
         {/* The Cards */}
         <AnimatePresence>
-          {!exit && images.map((src, index) => (
+          {!exit && cardImages.map((src, index) => (
             <motion.div
               key={index}
               className="absolute inset-0 rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-[#111]"
@@ -91,12 +123,12 @@ export function Preloader({ onComplete }: PreloaderProps) {
                 scale: 0.8
               }}
               animate={{ 
-                opacity: 1 - (index * 0.15), // Fade back cards slightly
+                opacity: 1 - (index * 0.15),
                 rotateX: [10, 5, 10], 
                 rotateY: [0, (index % 2 === 0 ? 5 : -5), 0],
-                rotateZ: (index - 1.5) * 5, // Fanned out
-                y: 0, // Stack them
-                scale: 1 - (index * 0.05), // Perspective scaling
+                rotateZ: (index - 1.5) * 5,
+                y: 0,
+                scale: 1 - (index * 0.05),
               }}
               transition={{
                 duration: 1.5,
@@ -104,24 +136,21 @@ export function Preloader({ onComplete }: PreloaderProps) {
                 ease: "backOut"
               }}
             >
-              {/* Image with grayscale filter */}
               <img 
                 src={src} 
-                alt="Cyberpunk element" 
+                alt="Portfolio Preview" 
                 className="w-full h-full object-cover grayscale contrast-125 brightness-75" 
               />
               
-              {/* Overlay UI Elements on Cards */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
                 <div className="text-[10px] font-mono text-white/60">
-                    <div>IMG_0{index + 1}</div>
-                    <div>DATA.RAW</div>
+                    <div>ASSET_0{index + 1}</div>
+                    <div>STATUS.READY</div>
                 </div>
-                <div className="w-2 h-2 bg-[#F2C94C] rounded-full animate-pulse" />
+                <div className="w-2 h-2 bg-[#ff8a1c] rounded-full animate-pulse" />
               </div>
               
-              {/* Glassmorphism shine */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
             </motion.div>
           ))}
@@ -135,14 +164,13 @@ export function Preloader({ onComplete }: PreloaderProps) {
             transition={{ duration: 0.5 }}
             className="relative"
           >
-            <h1 className="text-8xl md:text-9xl font-black tracking-tighter text-[#F2C94C] tabular-nums" style={{ textShadow: '0 0 40px rgba(242, 201, 76, 0.3)' }}>
+            <h1 className="text-8xl md:text-9xl font-black tracking-tighter text-[#ff8a1c] tabular-nums" style={{ textShadow: '0 0 40px rgba(255, 138, 28, 0.3)' }}>
               {count}%
             </h1>
             
-            {/* Loading text */}
             <div className="absolute -bottom-8 left-0 right-0 text-center">
-                <span className="text-xs font-mono tracking-[0.5em] text-[#F2C94C]/80 uppercase">
-                    System Loading
+                <span className="text-[10px] font-mono tracking-[0.3em] text-[#ff8a1c]/90 uppercase">
+                    {status}
                 </span>
             </div>
           </motion.div>
@@ -150,13 +178,13 @@ export function Preloader({ onComplete }: PreloaderProps) {
       </div>
 
       {/* Corner UI Elements */}
-      <div className="absolute top-8 left-8 font-mono text-xs text-white/40">
-        <div>SYS.V.2.0.4</div>
-        <div>INIT_SEQUENCE_START</div>
+      <div className="absolute top-8 left-8 font-mono text-[10px] text-white/40">
+        <div>SYS.V.3.1.0</div>
+        <div>PRELOAD_BUFFER_ACTIVE</div>
       </div>
-      <div className="absolute bottom-8 right-8 font-mono text-xs text-white/40 text-right">
-        <div>MEMORY_ALLOC: 64TB</div>
-        <div>ENCRYPTED_CONNECTION</div>
+      <div className="absolute bottom-8 right-8 font-mono text-[10px] text-white/40 text-right">
+        <div>QUEUED_ASSETS: 154</div>
+        <div>DOWNLOAD_SECURE_MODE</div>
       </div>
 
     </motion.div>
