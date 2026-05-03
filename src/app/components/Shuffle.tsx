@@ -5,6 +5,7 @@ interface ShuffleProps {
   duration?: number;
   delay?: number;
   className?: string;
+  style?: React.CSSProperties;
   triggerOnHover?: boolean;
   // Props from the user's snippet for compatibility
   shuffleDirection?: 'left' | 'right' | 'center';
@@ -24,6 +25,7 @@ const Shuffle: React.FC<ShuffleProps> = ({
   duration = 0.5,
   triggerOnHover = true,
   className = "",
+  style,
 }) => {
   const [displayText, setDisplayText] = useState(text);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -34,13 +36,6 @@ const Shuffle: React.FC<ShuffleProps> = ({
     
     if (intervalRef.current) clearInterval(intervalRef.current);
 
-    // Calculate speed based on duration and text length
-    // Total steps = text.length / increment
-    // Total time = steps * 30ms
-    // We want Total time ~= duration * 1000
-    // steps = (duration * 1000) / 30
-    // increment = text.length / steps
-    
     const steps = (duration * 1000) / 30;
     const increment = text.length / steps;
 
@@ -86,6 +81,7 @@ const Shuffle: React.FC<ShuffleProps> = ({
   return (
     <span 
       className={className}
+      style={style}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

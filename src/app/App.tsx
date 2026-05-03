@@ -30,7 +30,13 @@ export default function App() {
           />
           
           {currentPage === "home" && (
-            <LandingPage onNavigate={() => setCurrentPage("portfolio")} />
+            <LandingPage 
+              onNavigate={() => setCurrentPage("portfolio")} 
+              onProjectClick={(projectId) => {
+                setSelectedProject(projectId);
+                setCurrentPage("project-details");
+              }}
+            />
           )}
           {currentPage === "portfolio" && (
             <PortfolioPage onProjectClick={(projectId) => {

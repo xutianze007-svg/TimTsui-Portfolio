@@ -11,6 +11,7 @@ import img42 from 'figma:asset/42.png';
 import img47 from 'figma:asset/47.png';
 import img48 from 'figma:asset/48.png';
 import img49 from 'figma:asset/49.png';
+import slide16_9_5 from '../../assets/Slide 16_9 - 5.png';
 
 export function ProjectOverview() {
   return (
@@ -28,9 +29,10 @@ export function ProjectOverview() {
            />
            
            {/* Added Images 39-49 */}
-           <img src={img39} alt="Image 39" className="w-full h-auto block" />
-           <img src={img40} alt="Image 40" className="w-full h-auto block" />
-           <img src={img41} alt="Image 41" className="w-full h-auto block" />
+            <img src={img39} alt="Intro" className="w-full h-auto block" />
+            <img src={img40} alt="User Needs" className="w-full h-auto block" />
+            <img src={slide16_9_5} alt="Needs to Persona Bridge" className="w-full h-auto block" />
+            <img src={img41} alt="User Persona" className="w-full h-auto block" />
            <img src={img42} alt="Image 42" className="w-full h-auto block" />
            <img src={img47} alt="Image 47" className="w-full h-auto block" />
            <img src={img48} alt="Image 48" className="w-full h-auto block" />
