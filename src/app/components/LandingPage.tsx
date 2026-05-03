@@ -154,7 +154,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
 
   return (
     <section 
-      className="relative h-[100dvh] overflow-hidden bg-black text-white"
+      className="relative min-h-[100dvh] h-auto lg:h-[100dvh] overflow-y-auto lg:overflow-hidden bg-black text-white"
       onMouseMove={(e) => {
         const xPercent = e.clientX / window.innerWidth;
         if (xPercent > 0.4 && xPercent < 0.95) {
@@ -166,12 +166,12 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
       onMouseLeave={() => { isHovering.current = false; }}
     >
       
-      {/* Sequence Image Background */}
+      {/* Sequence Image Background - Fixed on mobile to stay behind scrolled content */}
       <img
         src={frameUrls[frameIndex] || `/tim-sequence/${frameIndex.toString().padStart(5, '0')}.png`}
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover object-[58%_50%]"
+        className="fixed lg:absolute inset-0 h-full w-full object-cover object-[58%_50%]"
         loading="eager"
       />
 
@@ -188,7 +188,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
         <div className="hero-particle left-[74%] top-[63%]" />
       </div>
 
-      <div className="relative z-10 flex h-full max-h-[100dvh] flex-col px-5 pb-4 pt-[64px] sm:px-8 lg:px-12 lg:pt-[92px]">
+      <div className="relative z-10 flex min-h-[100dvh] lg:h-full lg:max-h-[100dvh] flex-col px-5 pb-8 pt-[64px] sm:px-8 lg:px-12 lg:pt-[92px] lg:pb-4">
         <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 lg:gap-6 lg:grid-cols-[minmax(420px,0.85fr)_minmax(320px,0.55fr)]">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -283,11 +283,11 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
                   </p>
                   <div className="hero-radar h-12 w-12 shrink-0 rounded-full border border-[#ff8a1c]/45 bg-[radial-gradient(circle,rgba(255,138,28,0.28),transparent_60%)]" />
                 </div>
-                <div className="mt-4 flex items-start gap-7 border-t border-white/10 pt-3">
+                <div className="mt-4 flex items-start gap-4 lg:gap-7 border-t border-white/10 pt-3">
                   <div className="flex items-start">
                     <Shuffle
                       text="0 TO 1"
-                      className="text-2xl leading-none text-white cursor-default"
+                      className="text-xl lg:text-2xl leading-none text-white cursor-default"
                       style={{ fontFamily: '"Eurostile Extended", Michroma, Eurostile, sans-serif', fontWeight: 400 }}
                       shuffleDirection="right"
                       duration={0.35}
@@ -308,7 +308,7 @@ export function LandingPage({ onNavigate, onProjectClick }: LandingPageProps) {
                   <div className="flex items-start">
                     <Shuffle
                       text="100%"
-                      className="text-2xl leading-none text-white cursor-default"
+                      className="text-xl lg:text-2xl leading-none text-white cursor-default"
                       style={{ fontFamily: '"Eurostile Extended", Michroma, Eurostile, sans-serif', fontWeight: 400 }}
                       shuffleDirection="right"
                       duration={0.35}
