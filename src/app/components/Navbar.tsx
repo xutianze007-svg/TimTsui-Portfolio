@@ -107,11 +107,9 @@ export function Navbar({ onNavigate, currentPage }: NavbarProps) {
           </>
         )}
         <a 
-            href="#"
-            onClick={(e) => {
-                e.preventDefault();
-                alert("这里稍后可以替换为你的预约链接，比如 Calendly 或 Buy Me a Coffee");
-            }}
+            href="https://tianze4.gumroad.com/l/ux-ai-call"
+            target="_blank"
+            rel="noopener noreferrer"
             className={cn(
               "relative ml-2 overflow-hidden rounded-full text-sm transition-all duration-500 hover:scale-105 active:scale-95 group",
               isHome
