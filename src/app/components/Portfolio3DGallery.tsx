@@ -195,12 +195,7 @@ export function Portfolio3DGallery({ projects, onProjectClick }: Portfolio3DGall
       </div>
       
       {/* UI Overlays */}
-      <div className="absolute top-8 left-8 text-white font-sans text-xs tracking-widest z-50 pointer-events-none mix-blend-difference opacity-70">
-        TIMTSUI
-      </div>
-      <div className="absolute top-8 right-8 text-white font-sans text-xs tracking-widest z-50 pointer-events-none mix-blend-difference opacity-70">
-        MENU
-      </div>
+
       <div className="absolute bottom-8 left-8 text-white font-sans text-xs tracking-widest z-50 pointer-events-none mix-blend-difference opacity-70">
         2026
       </div>

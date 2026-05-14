@@ -288,6 +288,44 @@ body,
   animation-delay: 1.35s;
 }
 
+.cv-energy-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: 0;
+  border-radius: inherit;
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 42deg,
+      rgba(255, 138, 28, 0.12) 58deg,
+      rgba(255, 184, 82, 0.95) 74deg,
+      rgba(255, 138, 28, 0.18) 92deg,
+      transparent 118deg,
+      transparent 360deg
+    );
+  animation: cv-border-orbit 4.2s linear infinite;
+  opacity: 0.78;
+}
+
+.cv-energy-card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  border-radius: 7px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 138, 28, 0.14), transparent 62%),
+    rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(18px);
+}
+
+.cv-energy-card:hover::before {
+  opacity: 1;
+  animation-duration: 2.8s;
+}
+
 @keyframes hero-orbit-breathe {
   0%,
   100% {
@@ -361,5 +399,11 @@ body,
   50% {
     opacity: 0.88;
     transform: translate3d(16px, -18px, 0) scale(1.2);
+  }
+}
+
+@keyframes cv-border-orbit {
+  to {
+    transform: rotate(360deg);
   }
 }
