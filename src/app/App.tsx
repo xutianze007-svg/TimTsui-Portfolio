@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { LandingPage } from './components/LandingPage';
 import { PortfolioPage } from './components/PortfolioPage';
@@ -17,6 +17,10 @@ export default function App() {
         setSelectedProject(undefined);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [currentPage]);
 
   return (
     <div className="bg-black min-h-screen text-white font-sans selection:bg-[#FF5733] selection:text-black">

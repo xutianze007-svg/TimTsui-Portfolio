@@ -28,7 +28,7 @@ export function Navbar({ onNavigate, currentPage }: NavbarProps) {
         />
         <Shuffle
           text="TimTsui"
-          className="font-[Poppins] text-[15px]"
+          className="brand-wordmark text-[15px]"
           shuffleDirection="right"
           duration={0.35}
           animationMode="evenodd"

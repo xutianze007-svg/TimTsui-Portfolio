@@ -116,6 +116,11 @@ export function CVPage() {
 
     render(0);
 
+    const isMobileLayout = window.matchMedia("(max-width: 767px)").matches;
+    if (isMobileLayout) {
+      return;
+    }
+
     const playhead = { frame: 0 };
 
     const tl = gsap.timeline({
@@ -256,7 +261,7 @@ export function CVPage() {
   }, { dependencies: [isInitialFrameReady], scope: containerRef });
 
   return (
-    <div ref={containerRef} className="bg-black text-white min-h-screen overflow-x-hidden selection:bg-[#ff8a1c] selection:text-black">
+    <div ref={containerRef} className="cv-page bg-black text-white min-h-screen overflow-x-hidden selection:bg-[#ff8a1c] selection:text-black">
       
       {/* Fixed Background Canvas */}
       <div className="fixed inset-0 z-0 pointer-events-none">
@@ -276,7 +281,7 @@ export function CVPage() {
         )}
 
         {/* Text Overlay matching the user's design */}
-        <div className="cv-text-overlay absolute right-[6%] lg:right-[10%] top-[48%] -translate-y-1/2 w-full max-w-[600px] z-10 pointer-events-auto">
+        <div className="cv-text-overlay cv-copy-panel absolute right-[6%] lg:right-[10%] top-[48%] -translate-y-1/2 w-full max-w-[600px] z-10 pointer-events-auto">
           <p 
             className="text-[11px] md:text-[13px] uppercase text-[#ff8a1c] mb-3 tracking-[0.2em]"
             style={{ fontFamily: '"Eurostile Extended", Michroma, Eurostile, sans-serif', fontWeight: 500 }}
@@ -335,7 +340,7 @@ export function CVPage() {
               <span className="font-mono text-[11px] text-[#ff8a1c] uppercase md:pt-2 tracking-wider md:block hidden">TOOLS</span>
               <div className="md:hidden font-mono text-[11px] text-[#ff8a1c] uppercase pt-2 tracking-wider">TOOLS</div>
               <span className="text-[14px] md:text-[15px] text-[#828486] leading-relaxed font-['Inter:Medium',sans-serif] md:col-start-3 col-span-2 md:col-span-1 pr-2">
-                Figma, Cursor, Midjourney, Spline, Notion, GitHub, Claude, GPT-4, Runway
+                Figma, Cursor, Midjourney, Spline, Notion, GitHub, Claude, Codex, Runway
               </span>
             </div>
 
@@ -353,7 +358,7 @@ export function CVPage() {
         </div>
 
         {/* NEW Left Text Overlay (Appears at the end of the sequence) */}
-        <div className="cv-left-overlay absolute left-[6%] lg:left-[10%] top-[54%] -translate-y-1/2 w-full max-w-[600px] z-10 pointer-events-auto opacity-0">
+        <div className="cv-left-overlay cv-copy-panel absolute left-[6%] lg:left-[10%] top-[54%] -translate-y-1/2 w-full max-w-[600px] z-10 pointer-events-auto opacity-0">
           <div className="flex flex-col gap-1.5 mb-4">
             <div className="flex items-center gap-4">
               <span className="font-mono text-[13px] text-[#ff8a1c] tracking-widest font-semibold">
@@ -447,7 +452,7 @@ export function CVPage() {
         </div>
 
         {/* Right Text Overlay - Design Educator (appears during phase 2) */}
-        <div className="cv-right-overlay absolute right-[4%] lg:right-[2%] top-[50%] -translate-y-1/2 w-full max-w-[750px] z-10 pointer-events-auto opacity-0">
+        <div className="cv-right-overlay cv-copy-panel absolute right-[4%] lg:right-[2%] top-[50%] -translate-y-1/2 w-full max-w-[750px] z-10 pointer-events-auto opacity-0">
           <div className="flex flex-col gap-1.5 mb-4">
             <div className="flex items-center gap-4">
               <span className="font-mono text-[13px] text-[#ff8a1c] tracking-widest font-semibold">
@@ -573,7 +578,7 @@ export function CVPage() {
         </div>
 
         {/* Third Text Overlay - UX & Interface Designer section */}
-        <div className="cv-third-overlay absolute left-[6%] lg:left-[10%] top-[50%] -translate-y-1/2 w-full max-w-[650px] z-10 pointer-events-auto opacity-0">
+        <div className="cv-third-overlay cv-copy-panel absolute left-[6%] lg:left-[10%] top-[50%] -translate-y-1/2 w-full max-w-[650px] z-10 pointer-events-auto opacity-0">
           <div className="flex flex-col gap-1.5 mb-4">
             <div className="flex items-center gap-4">
               <span className="font-mono text-[13px] text-[#ff8a1c] tracking-widest font-semibold">
