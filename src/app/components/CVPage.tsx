@@ -14,56 +14,78 @@ const totalFrames = frameCount1 + frameCount2 + frameCount3;
 
 const currentFrame = (index: number) => {
   if (index < frameCount1) {
-    return `/cv-sequence/${(index + 1).toString().padStart(5, '0')}.png`;
+    return `/cv-sequence/${(index + 1).toString().padStart(5, '0')}.webp`;
   } else if (index < frameCount1 + frameCount2) {
-    return `/cv-sequence-2/${(index - frameCount1 + 1).toString().padStart(5, '0')}.png`;
+    return `/cv-sequence-2/${(index - frameCount1 + 1).toString().padStart(5, '0')}.webp`;
   } else {
-    return `/cv-sequence-3/${(index - frameCount1 - frameCount2 + 1).toString().padStart(5, '0')}.png`;
+    return `/cv-sequence-3/${(index - frameCount1 - frameCount2 + 1).toString().padStart(5, '0')}.webp`;
   }
 };
 
 export function CVPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const imageCacheRef = useRef<Array<HTMLImageElement | undefined>>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isInitialFrameReady, setIsInitialFrameReady] = useState(false);
 
-  // Preload images
+  // Load the first frame immediately, then stream the rest in the background.
   useEffect(() => {
-    const loadedImages: HTMLImageElement[] = [];
-    let loadedCount = 0;
-    
-    for (let i = 0; i < totalFrames; i++) {
-      const img = new Image();
-      img.src = currentFrame(i);
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === totalFrames) {
-          setImages(loadedImages);
-          setIsLoading(false);
+    let cancelled = false;
+
+    const loadFrame = (index: number) =>
+      new Promise<void>((resolve) => {
+        if (imageCacheRef.current[index]) {
+          resolve();
+          return;
         }
-      };
-      // fallback in case image fails to load to prevent hanging
-      img.onerror = () => {
-        loadedCount++;
-        if (loadedCount === totalFrames) {
-          setImages(loadedImages);
-          setIsLoading(false);
+
+        const img = new Image();
+        img.decoding = "async";
+        img.src = currentFrame(index);
+        img.onload = () => {
+          if (!cancelled) imageCacheRef.current[index] = img;
+          resolve();
+        };
+        img.onerror = () => {
+          resolve();
+        };
+      });
+
+    const loadRemainingFrames = async () => {
+      const queue = Array.from({ length: totalFrames - 1 }, (_, index) => index + 1);
+      const workers = Array.from({ length: 8 }, async () => {
+        while (!cancelled && queue.length > 0) {
+          const nextIndex = queue.shift();
+          if (nextIndex === undefined) return;
+          await loadFrame(nextIndex);
         }
-      }
-      loadedImages.push(img);
-    }
+      });
+
+      await Promise.all(workers);
+    };
+
+    loadFrame(0).then(() => {
+      if (cancelled) return;
+      setIsInitialFrameReady(true);
+      setIsLoading(false);
+      void loadRemainingFrames();
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useGSAP(() => {
-    if (images.length < totalFrames || !canvasRef.current) return;
+    if (!isInitialFrameReady || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     if (!context) return;
 
     // Use the first image's dimensions for the canvas to maintain aspect ratio
-    const img = images[0];
+    const img = imageCacheRef.current[0];
     if (img && img.width) {
       canvas.width = img.width;
       canvas.height = img.height;
@@ -73,7 +95,19 @@ export function CVPage() {
     }
 
     const render = (index: number) => {
-      const imageToDraw = images[index];
+      const requestedFrame = Math.max(0, Math.min(totalFrames - 1, Math.round(index)));
+      let imageToDraw = imageCacheRef.current[requestedFrame];
+
+      if (!imageToDraw?.width) {
+        for (let fallback = requestedFrame - 1; fallback >= 0; fallback--) {
+          const candidate = imageCacheRef.current[fallback];
+          if (candidate?.width) {
+            imageToDraw = candidate;
+            break;
+          }
+        }
+      }
+
       if (imageToDraw && imageToDraw.width) {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.drawImage(imageToDraw, 0, 0, canvas.width, canvas.height);
@@ -219,7 +253,7 @@ export function CVPage() {
       );
     });
 
-  }, { dependencies: [images], scope: containerRef });
+  }, { dependencies: [isInitialFrameReady], scope: containerRef });
 
   return (
     <div ref={containerRef} className="bg-black text-white min-h-screen overflow-x-hidden selection:bg-[#ff8a1c] selection:text-black">
