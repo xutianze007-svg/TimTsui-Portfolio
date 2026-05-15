@@ -323,8 +323,11 @@ export function CVPage() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,138,28,0.15),transparent_60%)] pointer-events-none z-0" />
             
             <div className="relative z-10 grid grid-cols-[40px_1fr] md:grid-cols-[40px_80px_1fr] items-start border-b border-white/5 pb-3.5 mb-3.5 gap-y-2 md:gap-y-0">
-              <div className="hero-system-orb h-8 w-8 rounded-full border border-[#ff8a1c]/40 flex items-center justify-center bg-[radial-gradient(circle,rgba(255,138,28,0.15),transparent_70%)]">
-                <Target className="w-4 h-4 text-[#ff8a1c]" strokeWidth={1.5} />
+              <div className="hero-system-orb h-8 w-8 rounded-full p-[1px] bg-gradient-to-br from-[#ff8a1c]/60 via-[#ff8a1c]/10 to-[#ff8a1c]/60 flex items-center justify-center relative overflow-hidden backdrop-blur-md shadow-[0_0_15px_rgba(255,138,28,0.05)]">
+                <div className="absolute inset-[1px] rounded-full bg-black/90 z-0"></div>
+                <div className="relative z-10 flex items-center justify-center w-full h-full bg-[radial-gradient(circle,rgba(255,138,28,0.1),transparent_70%)]">
+                  <Target className="w-4 h-4 text-[#ff8a1c]" strokeWidth={1.5} />
+                </div>
               </div>
               <span className="font-mono text-[11px] text-[#ff8a1c] uppercase md:pt-2 tracking-wider md:block hidden">FOCUS</span>
               <div className="md:hidden font-mono text-[11px] text-[#ff8a1c] uppercase pt-2 tracking-wider">FOCUS</div>
@@ -334,8 +337,11 @@ export function CVPage() {
             </div>
             
             <div className="relative z-10 grid grid-cols-[40px_1fr] md:grid-cols-[40px_80px_1fr] items-start border-b border-white/5 pb-3.5 mb-3.5 gap-y-2 md:gap-y-0">
-              <div className="hero-system-orb h-8 w-8 rounded-full border border-[#ff8a1c]/40 flex items-center justify-center bg-[radial-gradient(circle,rgba(255,138,28,0.15),transparent_70%)]">
-                <Box className="w-4 h-4 text-[#ff8a1c]" strokeWidth={1.5} />
+              <div className="hero-system-orb h-8 w-8 rounded-full p-[1px] bg-gradient-to-br from-[#ff8a1c]/60 via-[#ff8a1c]/10 to-[#ff8a1c]/60 flex items-center justify-center relative overflow-hidden backdrop-blur-md shadow-[0_0_15px_rgba(255,138,28,0.05)]">
+                <div className="absolute inset-[1px] rounded-full bg-black/90 z-0"></div>
+                <div className="relative z-10 flex items-center justify-center w-full h-full bg-[radial-gradient(circle,rgba(255,138,28,0.1),transparent_70%)]">
+                  <Box className="w-4 h-4 text-[#ff8a1c]" strokeWidth={1.5} />
+                </div>
               </div>
               <span className="font-mono text-[11px] text-[#ff8a1c] uppercase md:pt-2 tracking-wider md:block hidden">TOOLS</span>
               <div className="md:hidden font-mono text-[11px] text-[#ff8a1c] uppercase pt-2 tracking-wider">TOOLS</div>
@@ -345,8 +351,11 @@ export function CVPage() {
             </div>
 
             <div className="relative z-10 grid grid-cols-[40px_1fr] md:grid-cols-[40px_80px_1fr] items-start gap-y-2 md:gap-y-0">
-              <div className="hero-system-orb h-8 w-8 rounded-full border border-[#ff8a1c]/40 flex items-center justify-center bg-[radial-gradient(circle,rgba(255,138,28,0.15),transparent_70%)]">
-                <Rocket className="w-4 h-4 text-[#ff8a1c]" strokeWidth={1.5} />
+              <div className="hero-system-orb h-8 w-8 rounded-full p-[1px] bg-gradient-to-br from-[#ff8a1c]/60 via-[#ff8a1c]/10 to-[#ff8a1c]/60 flex items-center justify-center relative overflow-hidden backdrop-blur-md shadow-[0_0_15px_rgba(255,138,28,0.05)]">
+                <div className="absolute inset-[1px] rounded-full bg-black/90 z-0"></div>
+                <div className="relative z-10 flex items-center justify-center w-full h-full bg-[radial-gradient(circle,rgba(255,138,28,0.1),transparent_70%)]">
+                  <Rocket className="w-4 h-4 text-[#ff8a1c]" strokeWidth={1.5} />
+                </div>
               </div>
               <span className="font-mono text-[11px] text-[#ff8a1c] uppercase md:pt-2 tracking-wider md:block hidden">OUTPUT</span>
               <div className="md:hidden font-mono text-[11px] text-[#ff8a1c] uppercase pt-2 tracking-wider">OUTPUT</div>
@@ -515,8 +524,8 @@ export function CVPage() {
             <div className="flex flex-col ml-4">
               {/* Item 1 */}
               <div className="flex items-center gap-6 py-3 border-b border-white/5 relative group/item transition-colors hover:bg-white/[0.02] rounded-lg px-2 -mx-2">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 relative group-hover/item:shadow-[0_0_15px_rgba(255,138,28,0.3)] transition-all p-[1px] bg-gradient-to-tr from-[#ff8a1c]/80 via-transparent to-[#ff8a1c]/80">
-                  <div className="absolute inset-[1px] rounded-full bg-black/80 z-0"></div>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 relative group-hover/item:shadow-[0_0_20px_rgba(255,138,28,0.25)] transition-all p-[1px] bg-gradient-to-br from-[#ff8a1c]/70 via-[#ff8a1c]/5 to-[#ff8a1c]/70 backdrop-blur-md">
+                  <div className="absolute inset-[1px] rounded-full bg-black/90 z-0"></div>
                   <div className="absolute inset-0 rounded-full bg-[#ff8a1c]/10 opacity-0 group-hover/item:opacity-100 transition-opacity z-10"></div>
                   <Gem className="w-4 h-4 text-[#828486] group-hover/item:text-white transition-colors relative z-20" strokeWidth={1.5} />
                 </div>
@@ -528,8 +537,8 @@ export function CVPage() {
 
               {/* Item 2 */}
               <div className="flex items-center gap-6 py-3 border-b border-white/5 relative group/item transition-colors hover:bg-white/[0.02] rounded-lg px-2 -mx-2">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 relative group-hover/item:shadow-[0_0_15px_rgba(255,138,28,0.3)] transition-all p-[1px] bg-gradient-to-tr from-[#ff8a1c]/80 via-transparent to-[#ff8a1c]/80">
-                  <div className="absolute inset-[1px] rounded-full bg-black/80 z-0"></div>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 relative group-hover/item:shadow-[0_0_20px_rgba(255,138,28,0.25)] transition-all p-[1px] bg-gradient-to-br from-[#ff8a1c]/70 via-[#ff8a1c]/5 to-[#ff8a1c]/70 backdrop-blur-md">
+                  <div className="absolute inset-[1px] rounded-full bg-black/90 z-0"></div>
                   <div className="absolute inset-0 rounded-full bg-[#ff8a1c]/10 opacity-0 group-hover/item:opacity-100 transition-opacity z-10"></div>
                   <Figma className="w-4 h-4 text-[#828486] group-hover/item:text-white transition-colors relative z-20" strokeWidth={1.5} />
                 </div>
@@ -541,8 +550,8 @@ export function CVPage() {
 
               {/* Item 3 */}
               <div className="flex items-center gap-6 py-3 border-b border-white/5 relative group/item transition-colors hover:bg-white/[0.02] rounded-lg px-2 -mx-2">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 relative group-hover/item:shadow-[0_0_15px_rgba(255,138,28,0.3)] transition-all p-[1px] bg-gradient-to-tr from-[#ff8a1c]/80 via-transparent to-[#ff8a1c]/80">
-                  <div className="absolute inset-[1px] rounded-full bg-black/80 z-0"></div>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 relative group-hover/item:shadow-[0_0_20px_rgba(255,138,28,0.25)] transition-all p-[1px] bg-gradient-to-br from-[#ff8a1c]/70 via-[#ff8a1c]/5 to-[#ff8a1c]/70 backdrop-blur-md">
+                  <div className="absolute inset-[1px] rounded-full bg-black/90 z-0"></div>
                   <div className="absolute inset-0 rounded-full bg-[#ff8a1c]/10 opacity-0 group-hover/item:opacity-100 transition-opacity z-10"></div>
                   <BarChart2 className="w-4 h-4 text-[#828486] group-hover/item:text-white transition-colors relative z-20" strokeWidth={1.5} />
                 </div>
@@ -554,8 +563,8 @@ export function CVPage() {
 
               {/* Item 4 */}
               <div className="flex items-center gap-6 py-3 relative group/item transition-colors hover:bg-white/[0.02] rounded-lg px-2 -mx-2">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 relative group-hover/item:shadow-[0_0_15px_rgba(255,138,28,0.3)] transition-all p-[1px] bg-gradient-to-tr from-[#ff8a1c]/80 via-transparent to-[#ff8a1c]/80">
-                  <div className="absolute inset-[1px] rounded-full bg-black/80 z-0"></div>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 relative group-hover/item:shadow-[0_0_20px_rgba(255,138,28,0.25)] transition-all p-[1px] bg-gradient-to-br from-[#ff8a1c]/70 via-[#ff8a1c]/5 to-[#ff8a1c]/70 backdrop-blur-md">
+                  <div className="absolute inset-[1px] rounded-full bg-black/90 z-0"></div>
                   <div className="absolute inset-0 rounded-full bg-[#ff8a1c]/10 opacity-0 group-hover/item:opacity-100 transition-opacity z-10"></div>
                   <Share2 className="w-4 h-4 text-[#828486] group-hover/item:text-white transition-colors relative z-20" strokeWidth={1.5} />
                 </div>
